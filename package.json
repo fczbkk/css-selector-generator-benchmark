@@ -1,0 +1,21 @@
+{
+  "name": "css-selector-generator-benchmark",
+  "version": "1.0.0",
+  "description": "Benchmark for various JS libraries that generate unique CSS selectors.",
+  "keywords": [
+    "javascript",
+    "css",
+    "benchmark"
+  ],
+  "author": "Riki Fridrich <riki@fczbkk.com> (http://fczbkk.com/)",
+  "license": "MIT",
+  "dependencies": {
+    "css-selector": "^0.1.0",
+    "css-selector-generator": "^0.5.0",
+    "domtalk": "0.0.2",
+    "get-query-selector": "0.0.1",
+    "jquery": "^2.1.4",
+    "jquery-selectorator": "^0.1.3",
+    "selector-query": "^1.0.1"
+  }
+}
