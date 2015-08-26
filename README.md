@@ -2,6 +2,15 @@
 
 This is an attempt to create a benchmark for various JavaScript libraries for generating CSS selectors. It is inspired by @dandv's [question](https://github.com/fczbkk/css-selector-generator/issues/2).
 
+## Usage
+
+```sh
+npm install
+npm test
+```
+
+`index.html` should open in a browser tab with further instructions.
+
 ## Results
 
 ### @bimech [ellocate.js](https://github.com/bimech/ellocate.js)
@@ -23,7 +32,7 @@ html > body > div > div#wrap > div#main > div.container > div.main-content > div
 
 ### Chromium's [DOMPresentationUtils](https://chromium.googlesource.com/chromium/blink/+/master/Source/devtools/front_end/components/DOMPresentationUtils.js)
 
-NOTE: [Used version adapted to use in browser from NPM.](https://www.npmjs.com/package/cssman)
+NOTE: Used [version on NPM](https://www.npmjs.com/package/cssman) adapted for use in browser.
 
 * supports NPM
 * no dependencies
@@ -124,7 +133,7 @@ Longest selector: n/a
 * has documentation
 * MIT license
 * quite fast
-* generates most complex descendant selector for each element (ID, class, tag, `nth-child`), so it produces **longest selectors** among tested libraries
+* generates the [most complex descendant selector](https://github.com/olivierrr/selector-query/issues/1#issuecomment-133116659) for each element (ID, class, tag, `nth-child`), so it produces the **longest selectors** among tested libraries
 * **WARNING:** uses descendant selectors instead of child selectors, so it sometimes **produces non-unique selectors**
 
 Longest selector:
