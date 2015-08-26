@@ -37,17 +37,19 @@ function drawResults(results) {
     var row = output.appendChild(document.createElement('tr'));
 
     addCell(row, key);
-    addCell(row, data.validSelectors);
-    addCell(row, data.invalidSelectors);
+    addCell(row, data.validSelectors.length);
+    addCell(row, data.invalidSelectors.length);
     addCell(row, data.notFoundSelectors);
-    addCell(row, data.nonUniqueSelectors);
-    addCell(row, data.nonMatchingSelectors);
+    addCell(row, data.nonUniqueSelectors.length);
+    addCell(row, data.nonMatchingSelectors.length);
     addCell(row, "(" + data.longestSelector.length + ") " + data.longestSelector);
     addCell(row, data.duration + "ms");
 
   }
 
   wrapper.appendChild(output);
+
+  console.log(results);
 
 }
 
@@ -58,10 +60,10 @@ function getResults(testFunction) {
 
   var result = {
     duration: -1,
-    validSelectors: 0,
-    invalidSelectors: 0,
-    nonUniqueSelectors: 0,
-    nonMatchingSelectors: 0,
+    validSelectors: [],
+    invalidSelectors: [],
+    nonUniqueSelectors: [],
+    nonMatchingSelectors: [],
     notFoundSelectors: 0,
     longestSelector: ''
   };
@@ -92,17 +94,17 @@ function getResults(testFunction) {
       try {
         foundElements = document.querySelectorAll(selector);
       } catch (e) {
-        result.invalidSelectors++;
+        result.invalidSelectors.push(selector);
       }
 
 
       if (foundElements.length > 1) {
-        result.nonUniqueSelectors++;
+        result.nonUniqueSelectors.push(selector);
       } else {
         if (foundElements[0] === element) {
-          result.validSelectors++;
+          result.validSelectors.push(selector);
         } else {
-          result.nonMatchingSelector++;
+          result.nonMatchingSelectors.push(selector);
         }
       }
 

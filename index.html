@@ -143,6 +143,20 @@
     })();
   </script>
 
+  <!--
+  https://chromium.googlesource.com/chromium/blink/+/master/Source/devtools/front_end/components/DOMPresentationUtils.js
+  https://gist.github.com/asfaltboy/8aea7435b888164e8563
+  -->
+  <script>var module = {};</script>
+  <script src="node_modules/cssman/main.js"></script>
+  <script>
+    (function() {
+      addLibrary('chromium/DOMPresentationUtils', function (element) {
+        return module.exports(element, false);
+      });
+    })();
+  </script>
+
 </head>
 
 <body>

@@ -21,6 +21,38 @@ Longest selector:
 html > body > div > div#wrap > div#main > div.container > div.main-content > div.row > div.span12 > div.row > div.span4.sidebar > div.block.clearfix > div.block-header.clearfix > div.block-action > a.btn.btn-success.btn-small > i.icon-plus.icon-white
 ```
 
+### Chromium's [DOMPresentationUtils](https://chromium.googlesource.com/chromium/blink/+/master/Source/devtools/front_end/components/DOMPresentationUtils.js)
+
+NOTE: [Used version adapted to use in browser from NPM.](https://www.npmjs.com/package/cssman)
+
+* supports NPM
+* no dependencies
+* no tests
+* has documentation
+* see source code for license
+* average speed
+* uses ID, class, tag, attribute (for inputs) and `nth-child` child selectors
+* **WARNING: produces a lot of non-unique selectors** in both optimized and non-optimized version
+
+Example of non-unique selector:
+
+```
+div#main > div > div > div > div > div > div.span4.sidebar > div.block.clearfix > div.block-content > ul > li.show-all > a
+
+[
+  <a href=​"/​organizations">​Show all​</a>​,
+  <a href=​"/​topics">​Show all​</a>​,
+  <a href=​"/​topics?scope=starred">​Show all​</a>​,
+  <a href=​"/​topics?scope=public">​Show all​</a>​
+]
+```
+
+Longest selector:
+
+```
+div#main > div > div > div > div > div > div.span4.sidebar > div.block.clearfix > div.block-content > ul > li:nth-child(1) > a
+```
+
 ### @desmondw [snowflake](https://github.com/desmondw/snowflake)
 
 This is a Chrome extension, not a stand-alone library.

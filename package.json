@@ -12,6 +12,7 @@
   "dependencies": {
     "css-selector": "^0.1.0",
     "css-selector-generator": "^0.5.0",
+    "cssman": "0.0.1",
     "domtalk": "0.0.2",
     "get-query-selector": "0.0.1",
     "jquery": "^2.1.4",
