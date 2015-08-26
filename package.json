@@ -2,6 +2,15 @@
   "name": "css-selector-generator-benchmark",
   "version": "1.0.0",
   "description": "Benchmark for various JS libraries that generate unique CSS selectors.",
+  "main": "index.html",
+  "scripts": {
+    "pretest": "git submodule update --init",
+    "test": "index.html"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/css-selector-generator-benchmark"
+  },
   "keywords": [
     "javascript",
     "css",
