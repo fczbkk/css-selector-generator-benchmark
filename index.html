@@ -18,7 +18,8 @@
     require.config({
       paths: {
         'selector-generator': 'vendor/selector-generator/lib/selector-generator',
-        'CSSelector': 'vendor/CSSelector.js/dist/CSSelector'
+        'CSSelector': 'vendor/CSSelector.js/dist/CSSelector',
+        'OptimalSelect': 'node_modules/optimal-select/dist/optimal-select'
       }
     });
   </script>
@@ -153,6 +154,17 @@
     (function() {
       addLibrary('chromium/DOMPresentationUtils', function (element) {
         return module.exports(element, false);
+      });
+    })();
+  </script>
+
+  <!-- https://github.com/Autarc/optimal-select -->
+  <script>
+    (function() {
+      require(['OptimalSelect'], function (OptimalSelect) {
+        addLibrary('autarc/optimal-select', function (element) {
+          return OptimalSelect.select(element)
+        });
       });
     })();
   </script>
