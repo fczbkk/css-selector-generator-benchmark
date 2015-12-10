@@ -13,6 +13,23 @@ npm test
 
 ## Results
 
+### @autarc [optimal-select](https://github.com/autarc/optimal-select)
+* supports UMD (Browser & Node)
+* no dependencies
+* no tests
+* MIT license
+* allows single and multiple input elements
+* separate handling of selection and optimization (export ES2015 Modules)
+* creates efficient and robust selectors using ID, class, attributes, tags and child marker
+* generates **shortest selectors** among all tested libraries
+
+Longest selector:
+
+```
+.clearfix:nth-of-type(3) li:nth-of-type(2) .icon-eye-open
+```
+
+
 ### @bimech [ellocate.js](https://github.com/bimech/ellocate.js)
 
 * supports Bower
@@ -83,7 +100,6 @@ div.span12 > div:nth-of-type(1) > div:nth-of-type(1) > ul:nth-of-type(1) > li:nt
 * has documentation
 * Unlicense license
 * tries to use optimized ID, class, tag child selectors or their combination, uses `nth-child` as fallback
-* generates **shortest selectors** among all tested libraries
 
 Longest selector:
 

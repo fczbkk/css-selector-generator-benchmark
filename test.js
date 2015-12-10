@@ -16,7 +16,6 @@ function runTests() {
   }
 
   drawResults(results);
-
 }
 
 
@@ -26,17 +25,21 @@ function drawResults(results) {
 
   var output = document.createDocumentFragment()
 
-  function addCell(row, content) {
-    var cell = row.appendChild(document.createElement('td'));
-    cell.appendChild(document.createTextNode(content));
-    return cell;
-  }
+  var resultsList = Object.keys(results).map(function (key) {
+    var result = results[key]
+    result.key = key
+    return result
+  })
+  // priority: Valid (v), Longest (^), Duration (^)
+  .sort(function(curr, next) {
+    return next.validSelectors.length - curr.validSelectors.length ||
+           curr.longestSelector.length - next.longestSelector.length ||
+           curr.duration - next.duration
+  })
 
-  for (key in results) {
-    var data = results[key];
+  resultsList.forEach(function(data) {
     var row = output.appendChild(document.createElement('tr'));
-
-    addCell(row, key);
+    addCell(row, data.key);
     addCell(row, data.validSelectors.length);
     addCell(row, data.invalidSelectors.length);
     addCell(row, data.notFoundSelectors);
@@ -44,13 +47,22 @@ function drawResults(results) {
     addCell(row, data.nonMatchingSelectors.length);
     addCell(row, "(" + data.longestSelector.length + ") " + data.longestSelector);
     addCell(row, data.duration + "ms");
-
-  }
+  })
 
   wrapper.appendChild(output);
 
-  console.log(results);
+  console.log(resultsList);
+}
 
+function hasInvalidSelectors (data) {
+  return data.invalidSelectors.length || data.notFoundSelectors.length ||
+         data.nonUniqueSelectors.length || data.nonMatchingSelectors.length
+}
+
+function addCell(row, content) {
+  var cell = row.appendChild(document.createElement('td'));
+  cell.appendChild(document.createTextNode(content));
+  return cell;
 }
 
 
@@ -119,5 +131,4 @@ function getResults(testFunction) {
   }
 
   return result;
-
 }
