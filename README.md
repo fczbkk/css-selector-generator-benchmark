@@ -13,7 +13,26 @@ npm test
 
 ## Results
 
+### @antonmedv [finder](https://github.com/antonmedv/finder)
+
+* NPM package, written in TypeScript
+* no dependencies
+* has tests
+* has documentation
+* MIT license
+* slower speed than other libraries (still fast enough for regular use)
+* creates efficient and robust selectors using ID, class, tags and child marker
+    * does not seem to support attribute selectors
+* generates **shortest selectors** among all tested libraries
+
+Longest selector:
+
+```
+.block:nth-child(3) li:nth-child(2) > .icon-eye-open
+```
+
 ### @autarc [optimal-select](https://github.com/autarc/optimal-select)
+
 * supports UMD (Browser & Node)
 * no dependencies
 * no tests
@@ -21,7 +40,6 @@ npm test
 * allows single and multiple input elements
 * separate handling of selection and optimization (export ES2015 Modules)
 * creates efficient and robust selectors using ID, class, attributes, tags and child marker
-* generates **shortest selectors** among all tested libraries
 
 Longest selector:
 

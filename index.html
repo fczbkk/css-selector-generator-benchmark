@@ -19,7 +19,8 @@
       paths: {
         'selector-generator': 'vendor/selector-generator/lib/selector-generator',
         'CSSelector': 'vendor/CSSelector.js/dist/CSSelector',
-        'OptimalSelect': 'node_modules/optimal-select/dist/optimal-select'
+        // TODO newer version of OptimalSelect has different interface
+        // 'OptimalSelect': 'node_modules/optimal-select/dist/optimal-select'
       }
     });
   </script>
@@ -159,12 +160,24 @@
   </script>
 
   <!-- https://github.com/Autarc/optimal-select -->
+  <!--
   <script>
     (function() {
       require(['OptimalSelect'], function (OptimalSelect) {
         addLibrary('autarc/optimal-select', function (element) {
           return OptimalSelect.select(element)
         });
+      });
+    })();
+  </script>
+  -->
+
+  <!-- https://github.com/antonmedv/finder -->
+  <script src="temp/finder/index.js"></script>
+  <script>
+    (function () {
+      addLibrary('antonmedv/finder', function (element) {
+        return finder.default(element);
       });
     })();
   </script>
