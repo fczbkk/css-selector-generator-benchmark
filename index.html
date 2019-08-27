@@ -19,8 +19,8 @@
       paths: {
         'selector-generator': 'vendor/selector-generator/lib/selector-generator',
         'CSSelector': 'vendor/CSSelector.js/dist/CSSelector',
-        // TODO newer version of OptimalSelect has different interface
-        // 'OptimalSelect': 'node_modules/optimal-select/dist/optimal-select'
+        'OptimalSelect': 'node_modules/optimal-select/dist/optimal-select',
+        'css-selector-generator': 'node_modules/css-selector-generator/build/css-selector-generator'
       }
     });
   </script>
@@ -29,11 +29,14 @@
   <script src="test.js"></script>
 
   <!-- https://github.com/fczbkk/css-selector-generator -->
-  <script src="node_modules/css-selector-generator/build/css-selector-generator.js"></script>
   <script>
     (function() {
-      lib = new CssSelectorGenerator();
-      addLibrary('fczbkk/css-selector-generator', lib.getSelector.bind(lib));
+      require(['css-selector-generator'], function (CssSelectorGenerator) {
+        addLibrary('fczbkk/css-selector-generator', function (element) {
+          var generator = new CssSelectorGenerator;
+          return generator.getSelector(element)
+        });
+      });
     })();
   </script>
 
@@ -160,7 +163,6 @@
   </script>
 
   <!-- https://github.com/Autarc/optimal-select -->
-  <!--
   <script>
     (function() {
       require(['OptimalSelect'], function (OptimalSelect) {
@@ -170,7 +172,6 @@
       });
     })();
   </script>
-  -->
 
   <!-- https://github.com/antonmedv/finder -->
   <script src="temp/finder/index.js"></script>
