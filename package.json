@@ -27,7 +27,7 @@
     "cssman": "0.0.2",
     "domtalk": "0.0.2",
     "get-query-selector": "0.0.1",
-    "jquery": "^3.4.0",
+    "jquery": "^3.5.0",
     "jquery-selectorator": "^0.1.3",
     "optimal-select": "^4.0.1",
     "selector-query": "^1.0.1"
