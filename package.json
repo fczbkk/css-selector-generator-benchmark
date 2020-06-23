@@ -1,14 +1,7 @@
 {
   "name": "css-selector-generator-benchmark",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "Benchmark for various JS libraries that generate unique CSS selectors.",
-  "main": "index.html",
-  "scripts": {
-    "pretest": "git submodule update --init && npm run compile",
-    "test": "index.html",
-    "compile": "npm run compile:finder",
-    "compile:finder": "webpack --config ./config/webpack.medv.finder.js"
-  },
   "repository": {
     "type": "git",
     "url": "https://github.com/css-selector-generator-benchmark"
@@ -21,19 +14,13 @@
   "author": "Riki Fridrich <riki@fczbkk.com> (http://fczbkk.com/)",
   "license": "MIT",
   "dependencies": {
-    "@medv/finder": "^1.1.2",
-    "css-selector": "^0.1.0",
-    "css-selector-generator": "^1.2.0",
-    "cssman": "0.0.2",
-    "domtalk": "0.0.2",
-    "get-query-selector": "0.0.1",
-    "jquery": "^3.5.0",
-    "jquery-selectorator": "^0.1.3",
-    "optimal-select": "^4.0.1",
-    "selector-query": "^1.0.1"
+    "cors": "^2.8.5",
+    "css-selector-generator": "^2.1.1",
+    "express": "^4.17.1",
+    "get-port": "^5.1.1",
+    "puppeteer": "^4.0.0"
   },
-  "devDependencies": {
-    "webpack": "^4.4.1",
-    "webpack-cli": "^2.0.13"
+  "scripts": {
+    "start": "node ./src/index.js"
   }
 }
