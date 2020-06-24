@@ -1,14 +1,23 @@
+const {
+  DEBUG,
+  generatorName,
+  libraries,
+  tempPath,
+  bundlePath,
+  srcPath
+} = require('./config.js')
+const { createBundleFiles, getBundlePath } = require('./webpack.js')
 const path = require('path')
 const fs = require('fs').promises
+const mkdirp = require('mkdirp')
+const rimraf = require('rimraf')
 const puppeteer = require('puppeteer')
 const { getServer } = require('./../server/index.js')
 
-const libraries = [
-  {
-    id: 'css-selector-generator',
-    generator: '__generateCssSelector = CssSelectorGenerator.getCssSelector'
-  }
-]
+async function generateBundle ({ id, generator }) {
+  console.log(generator)
+  return ''
+}
 
 async function getLibraryPath (libraryId) {
   const packageLibraryPath = path.resolve(__dirname, `../node_modules/${libraryId}`)
@@ -18,21 +27,19 @@ async function getLibraryPath (libraryId) {
   return path.resolve(packageLibraryPath, fileData.main)
 }
 
-async function runBenchmark ({ page, libraryId, generator }) {
-  const libraryPath = await getLibraryPath(libraryId)
+async function runBenchmark ({ page, libraryId }) {
   await page.addScriptTag({
-    path: libraryPath
+    path: getBundlePath(libraryId)
   })
 
-  page.on('console', msg => console.log(msg.text()))
+  if (DEBUG) {
+    page.on('console', msg => console.log(msg.text()))
+  }
 
-  page.evaluate(generator)
-
-  return await page.evaluate((generator) => {
-    eval(generator)
+  return await page.evaluate((generatorName) => {
     return ([...document.body.querySelectorAll('*')]).map((element) => {
       const startTime = Date.now()
-      const selector = __generateCssSelector(element)
+      const selector = window[generatorName](element)
       const endTime = Date.now()
       const appliedSelector = document.body.querySelectorAll(selector)
       return {
@@ -42,7 +49,7 @@ async function runBenchmark ({ page, libraryId, generator }) {
         duration: endTime - startTime
       }
     })
-  }, generator)
+  }, generatorName)
 }
 
 async function getBenchmarkData ({ browser, port, libraryId, generator }) {
@@ -52,9 +59,14 @@ async function getBenchmarkData ({ browser, port, libraryId, generator }) {
 }
 
 (async () => {
+  await mkdirp(srcPath)
+  await mkdirp(bundlePath)
+
+  await createBundleFiles(libraries)
+
   const { server, port } = await getServer()
 
-  const browser = await puppeteer.launch()
+  const browser = await puppeteer.launch({ devtools: DEBUG })
 
   const page = await browser.newPage()
   await page.goto(`http://localhost:${port}`, {})
@@ -62,8 +74,14 @@ async function getBenchmarkData ({ browser, port, libraryId, generator }) {
   const results = {}
 
   for (let i = 0; i < libraries.length; i++) {
-    const {id: libraryId, generator} = libraries[i]
-    const benchmarkData = await getBenchmarkData({ browser, port, libraryId, generator })
+    const { libraryId, generator } = libraries[i]
+
+    const benchmarkData = await getBenchmarkData({
+      browser,
+      port,
+      libraryId,
+      generator
+    })
 
     const result = {
       slowest: -1,
@@ -72,10 +90,11 @@ async function getBenchmarkData ({ browser, port, libraryId, generator }) {
       total: 0,
       longestSelector: '',
       allUnique: true,
-      allMatching: true
+      allMatching: true,
+      // data: benchmarkData
     }
 
-    benchmarkData.forEach(({selector, isMatching, isUnique, duration}) => {
+    benchmarkData.forEach(({ selector, isMatching, isUnique, duration }) => {
       result.total += duration
       if (result.slowest < duration) {
         result.slowest = duration
@@ -94,15 +113,18 @@ async function getBenchmarkData ({ browser, port, libraryId, generator }) {
     result.average = result.total / benchmarkData.length
 
     const sortedDurations = benchmarkData
-      .map(({duration}) => duration)
+      .map(({ duration }) => duration)
       .sort((a, b) => a - b)
     result.median = sortedDurations[Math.round(sortedDurations.length / 2)]
 
     results[libraryId] = result
   }
 
-  console.log(results)
+  console.log(JSON.stringify(results, null, '  '))
 
   await browser.close()
   server.close()
+
+  // TODO
+  // await rimraf(tempPath)
 })()

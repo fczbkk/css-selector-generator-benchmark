@@ -18,7 +18,11 @@
     "css-selector-generator": "^2.1.1",
     "express": "^4.17.1",
     "get-port": "^5.1.1",
-    "puppeteer": "^4.0.0"
+    "mkdirp": "^1.0.4",
+    "puppeteer": "^4.0.0",
+    "rimraf": "^3.0.2",
+    "simmerjs": "^0.5.6",
+    "webpack": "^4.43.0"
   },
   "scripts": {
     "start": "node ./src/index.js"
