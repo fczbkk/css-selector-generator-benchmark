@@ -23,6 +23,7 @@
     "optimal-select": "^4.0.1",
     "puppeteer": "^4.0.0",
     "rimraf": "^3.0.2",
+    "selector-query": "^1.0.1",
     "simmerjs": "^0.5.6",
     "webpack": "^4.43.0"
   },

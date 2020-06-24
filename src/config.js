@@ -36,6 +36,13 @@ const libraries = [
       import { select } from 'optimal-select'
       window.${generatorName} = select
     `
+  },
+  {
+    libraryId: 'selector-query',
+    generator: `
+      import selectorQuery from 'selector-query'
+      window.${generatorName} = selectorQuery
+    `
   }
 ]
 
