@@ -24,7 +24,7 @@ const libraries = [
     `
   },
   {
-    libraryId: '@medv_finder',
+    libraryId: '@medv/finder',
     generator: `
       import {finder} from '@medv/finder'
       window.${generatorName} = finder

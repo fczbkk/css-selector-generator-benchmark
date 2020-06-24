@@ -3,12 +3,16 @@ const fs = require('fs').promises
 const webpack = require('webpack')
 const { srcPath, bundlePath, DEBUG } = require('./config.js')
 
+function sanitizeFileName (fileName) {
+  return fileName.replace(/\//g, '_')
+}
+
 function getEntryFilePath (libraryId) {
-  return path.resolve(srcPath, `${libraryId}.js`)
+  return path.resolve(srcPath, `${sanitizeFileName(libraryId)}.js`)
 }
 
 function getBundlePath (libraryId) {
-  return path.resolve(bundlePath, `${libraryId}.js`)
+  return path.resolve(bundlePath, `${sanitizeFileName(libraryId)}.js`)
 }
 
 async function createEntryFile ({ libraryId, generator }) {
@@ -23,7 +27,7 @@ function createWebpackConfig (libraries) {
   const entry = {}
 
   libraries.forEach(({libraryId}) => {
-    entry[libraryId] = getEntryFilePath(libraryId)
+    entry[sanitizeFileName(libraryId)] = getEntryFilePath(libraryId)
   })
 
   return {
