@@ -12,6 +12,7 @@ const mkdirp = require('mkdirp')
 const rimraf = promisify(require('rimraf'))
 const puppeteer = require('puppeteer')
 const { getServer } = require('./../server/index.js')
+const {getPackageInfo} = require('./npm.js')
 
 async function runBenchmark ({ page, libraryId }) {
   await page.addScriptTag({
@@ -103,7 +104,12 @@ async function getBenchmarkData ({ browser, port, libraryId, generator }) {
       .sort((a, b) => a - b)
     result.median = sortedDurations[Math.round(sortedDurations.length / 2)]
 
-    results[libraryId] = result
+    const packageInfo = await getPackageInfo(libraryId)
+
+    results[libraryId] = {
+      benchmark: result,
+      packageInfo
+    }
   }
 
   console.log(JSON.stringify(results, null, '  '))
