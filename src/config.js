@@ -22,6 +22,13 @@ const libraries = [
       import Simmer from 'simmerjs'
       window.${generatorName} = new Simmer()
     `
+  },
+  {
+    libraryId: '@medv_finder',
+    generator: `
+      import {finder} from '@medv/finder'
+      window.${generatorName} = finder
+    `
   }
 ]
 
