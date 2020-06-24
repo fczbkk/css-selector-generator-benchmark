@@ -89,8 +89,8 @@ async function getBenchmarkData ({ browser, port, libraryId, generator }) {
       median: -1,
       total: 0,
       longestSelector: '',
-      allUnique: true,
-      allMatching: true,
+      nonUnique: 0,
+      nonMatching: 0,
       // data: benchmarkData
     }
 
@@ -103,10 +103,10 @@ async function getBenchmarkData ({ browser, port, libraryId, generator }) {
         result.longestSelector = selector
       }
       if (!isUnique) {
-        result.allUnique = false
+        result.nonUnique += 1
       }
       if (!isMatching) {
-        result.allMatching = false
+        result.nonMatching += 1
       }
     })
 
