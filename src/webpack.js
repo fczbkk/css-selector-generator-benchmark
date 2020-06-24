@@ -1,7 +1,7 @@
 const path = require('path')
 const fs = require('fs').promises
 const webpack = require('webpack')
-const { srcPath, bundlePath } = require('./config.js')
+const { srcPath, bundlePath, DEBUG } = require('./config.js')
 
 function getEntryFilePath (libraryId) {
   return path.resolve(srcPath, `${libraryId}.js`)
@@ -27,7 +27,7 @@ function createWebpackConfig (libraries) {
   })
 
   return {
-    mode: 'development',
+    mode: DEBUG ? 'development' : 'production',
     entry,
     output: {
       filename: '[name].js',

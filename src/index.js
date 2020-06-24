@@ -7,25 +7,11 @@ const {
   srcPath
 } = require('./config.js')
 const { createBundleFiles, getBundlePath } = require('./webpack.js')
-const path = require('path')
-const fs = require('fs').promises
+const { promisify } = require('util')
 const mkdirp = require('mkdirp')
-const rimraf = require('rimraf')
+const rimraf = promisify(require('rimraf'))
 const puppeteer = require('puppeteer')
 const { getServer } = require('./../server/index.js')
-
-async function generateBundle ({ id, generator }) {
-  console.log(generator)
-  return ''
-}
-
-async function getLibraryPath (libraryId) {
-  const packageLibraryPath = path.resolve(__dirname, `../node_modules/${libraryId}`)
-  const packageJsonPath = path.resolve(packageLibraryPath, `package.json`)
-  const fileContent = String(await fs.readFile(packageJsonPath))
-  const fileData = JSON.parse(fileContent)
-  return path.resolve(packageLibraryPath, fileData.main)
-}
 
 async function runBenchmark ({ page, libraryId }) {
   await page.addScriptTag({
@@ -124,6 +110,5 @@ async function getBenchmarkData ({ browser, port, libraryId, generator }) {
 
   await browser.close()
   server.close()
-
   await rimraf(tempPath)
 })()
