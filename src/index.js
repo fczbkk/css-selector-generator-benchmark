@@ -125,6 +125,5 @@ async function getBenchmarkData ({ browser, port, libraryId, generator }) {
   await browser.close()
   server.close()
 
-  // TODO
-  // await rimraf(tempPath)
+  await rimraf(tempPath)
 })()

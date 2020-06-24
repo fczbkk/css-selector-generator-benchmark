@@ -43,7 +43,22 @@ const libraries = [
       import selectorQuery from 'selector-query'
       window.${generatorName} = selectorQuery
     `
-  }
+  },
+  // TODO figure out what is the problem with module's export
+  // {
+  //   libraryId: 'domtalk',
+  //   generator: `
+  //     import { getSelectorFromElement } from 'domtalk'
+  //     window.${generatorName} = getSelectorFromElement
+  //   `
+  // },
+    {
+      libraryId: 'get-query-selector',
+      generator: `
+        import getQuerySelector from 'get-query-selector'
+        window.${generatorName} = getQuerySelector
+      `
+    }
 ]
 
 module.exports = {
