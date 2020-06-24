@@ -29,6 +29,13 @@ const libraries = [
       import {finder} from '@medv/finder'
       window.${generatorName} = finder
     `
+  },
+  {
+    libraryId: 'optimal-select',
+    generator: `
+      import { select } from 'optimal-select'
+      window.${generatorName} = select
+    `
   }
 ]
 
