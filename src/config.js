@@ -3,6 +3,9 @@ const path = require('path')
 const tempPath = path.resolve(__dirname, '../temp')
 const srcPath = path.resolve(tempPath, 'src')
 const bundlePath = path.resolve(tempPath, 'bundle')
+const readmePath = path.resolve(__dirname, '../README.md')
+
+const benchmarkSectionName = 'Benchmarks'
 
 const DEBUG = false
 
@@ -66,6 +69,8 @@ module.exports = {
   tempPath,
   srcPath,
   bundlePath,
+  readmePath,
   generatorName,
-  libraries
+  libraries,
+  benchmarkSectionName
 }

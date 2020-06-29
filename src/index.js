@@ -4,7 +4,8 @@ const {
   libraries,
   tempPath,
   bundlePath,
-  srcPath
+  srcPath,
+  readmePath
 } = require('./config.js')
 const { createBundleFiles, getBundlePath } = require('./webpack.js')
 const { promisify } = require('util')
@@ -12,7 +13,8 @@ const mkdirp = require('mkdirp')
 const rimraf = promisify(require('rimraf'))
 const puppeteer = require('puppeteer')
 const { getServer } = require('./../server/index.js')
-const {getPackageInfo} = require('./npm.js')
+const { getPackageInfo } = require('./npm.js')
+const { updateMarkdownFile } = require('./markdown.js')
 
 async function runBenchmark ({ page, libraryId }) {
   await page.addScriptTag({
@@ -77,7 +79,7 @@ async function getBenchmarkData ({ browser, port, libraryId, generator }) {
       total: 0,
       longestSelector: '',
       nonUnique: 0,
-      nonMatching: 0,
+      nonMatching: 0
       // data: benchmarkData
     }
 
@@ -112,9 +114,13 @@ async function getBenchmarkData ({ browser, port, libraryId, generator }) {
     }
   }
 
-  console.log(JSON.stringify(results, null, '  '))
-
   await browser.close()
   server.close()
   await rimraf(tempPath)
+
+  await updateMarkdownFile({
+    filePath: readmePath,
+    libraries,
+    results
+  })
 })()

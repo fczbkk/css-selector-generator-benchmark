@@ -2,9 +2,13 @@
 
 This is an attempt to create a benchmark for various JavaScript libraries for generating CSS selectors. It is inspired by @dandv's [question](https://github.com/fczbkk/css-selector-generator/issues/2).
 
-## Usage
+## Benchmarks
 
-TODO
+benchmarks content
+
+## Notes
+
+-   TODO
 
 ## Bug reports, feature requests and contact
 
