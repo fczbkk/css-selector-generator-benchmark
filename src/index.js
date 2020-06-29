@@ -64,6 +64,7 @@ async function getBenchmarkData ({ browser, port, libraryId, generator }) {
 
   for (let i = 0; i < libraries.length; i++) {
     const { libraryId, generator } = libraries[i]
+    console.log('benchmarking', libraryId)
 
     const benchmarkData = await getBenchmarkData({
       browser,

@@ -10,6 +10,7 @@ async function getPackageInfo (packageId) {
     const data = JSON.parse(stdout)
     const [, username, email] = /(.*) <(.*)>/.exec(data._npmUser)
     return {
+      id: data.name,
       version: data.version,
       lastUpdate: data.time[data.version],
       homepage: data.homepage,
