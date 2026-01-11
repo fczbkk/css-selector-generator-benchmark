@@ -1,3 +1,6 @@
-/node_modules/
-/.idea/
-/temp/
+node_modules/
+.idea/
+temp/
+dist/
+*.log
+.DS_Store

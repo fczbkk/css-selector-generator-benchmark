@@ -1,253 +1,74 @@
 # CSS Selector Generator Benchmark
 
-This is an attempt to create a benchmark for various JavaScript libraries for generating CSS selectors. It is inspired by @dandv's [question](https://github.com/fczbkk/css-selector-generator/issues/2).
+Benchmark to compare Javascript libraries for generating CSS selectors.
 
-## Usage
+**[Run the benchmark](https://fczbkk.github.io/css-selector-generator-benchmark/)**
+
+## Overview
+
+Tests each library against a complex HTML document and measures various performance and quality metrics.
+
+## Currently Tested Libraries
+
+- [css-selector-generator](https://github.com/fczbkk/css-selector-generator) - Configurable CSS selector generator (default settings)
+- [css-selector-generator (custom options)](https://github.com/fczbkk/css-selector-generator) - Same library with custom selectors: id, class, tag, nthchild
+- [@medv/finder](https://github.com/antonmedv/finder) - Fast and efficient CSS selector generator
+- [@cypress/unique-selector](https://github.com/cypress-io/unique-selector) - Maintained by Cypress, returns unique CSS selector for DOM nodes
+
+## Metrics
+
+The benchmark measures:
+
+- **Total Elements**: Number of elements tested
+- **Selectors Generated**: How many selectors were successfully created
+- **Unique Selectors**: How many selectors uniquely match only their target element
+- **Total Time**: Total time to generate all selectors
+- **Average Time**: Average time per selector
+- **Fastest/Slowest Time**: Performance range
+- **Selector Length**: Shortest, longest, and average selector length
+
+## Installation
 
 ```sh
 npm install
-npm test
 ```
 
-`index.html` should open in a browser tab with further instructions.
+## Usage
 
-## Results
+### Development
 
-### @antonmedv [finder](https://github.com/antonmedv/finder)
-
-* NPM package, written in TypeScript
-* no dependencies
-* has tests
-* has documentation
-* MIT license
-* slower speed than other libraries (still fast enough for regular use)
-* creates efficient and robust selectors using ID, class, tags and child marker
-    * does not seem to support attribute selectors
-* generates **shortest selectors** among all tested libraries
-
-Longest selector:
-
-```
-.block:nth-child(3) li:nth-child(2) > .icon-eye-open
+```sh
+npm run dev
 ```
 
-### @autarc [optimal-select](https://github.com/autarc/optimal-select)
+### Build
 
-* supports UMD (Browser & Node)
-* no dependencies
-* no tests
-* MIT license
-* allows single and multiple input elements
-* separate handling of selection and optimization (export ES2015 Modules)
-* creates efficient and robust selectors using ID, class, attributes, tags and child marker
-
-Longest selector:
-
-```
-.clearfix:nth-of-type(3) li:nth-of-type(2) .icon-eye-open
+```sh
+npm run build
 ```
 
+### Preview
 
-### @bimech [ellocate.js](https://github.com/bimech/ellocate.js)
-
-* supports Bower
-* depends on Jquery
-* has tests
-* has documentation
-* no license
-* average speed
-* uses ID, class and tag selectors
-* **WARNING:** doesn't use `nth-child` selectors, so it **produces a lot of non-unique selectors**
-
-Longest selector:
-
-```
-html > body > div > div#wrap > div#main > div.container > div.main-content > div.row > div.span12 > div.row > div.span4.sidebar > div.block.clearfix > div.block-header.clearfix > div.block-action > a.btn.btn-success.btn-small > i.icon-plus.icon-white
+```sh
+npm run preview
 ```
 
-### Chromium's [DOMPresentationUtils](https://chromium.googlesource.com/chromium/blink/+/master/Source/devtools/front_end/components/DOMPresentationUtils.js)
+## Test Document
 
-NOTE: Used [version on NPM](https://www.npmjs.com/package/cssman) adapted for use in browser.
+The benchmark uses `complex.html` from the css-selector-generator test suite, which contains a realistic web application interface with nested elements, multiple classes, IDs, and various attribute combinations.
 
-* supports NPM
-* no dependencies
-* no tests
-* has documentation
-* see source code for license
-* average speed
-* uses ID, class, tag, attribute (for inputs) and `nth-child` child selectors
-* **WARNING: produces a lot of non-unique selectors** in both optimized and non-optimized version
+## Adding New Libraries
 
-Example of non-unique selector:
+To add a new library to the benchmark:
 
-```
-div#main > div > div > div > div > div > div.span4.sidebar > div.block.clearfix > div.block-content > ul > li.show-all > a
+1. Install the library: `npm install <library-name>`
+2. Update `src/utils/benchmark.ts` to include the library
+3. Add the GitHub URL to `src/components/BenchmarkTable.tsx`
 
-[
-  <a href=​"/​organizations">​Show all​</a>​,
-  <a href=​"/​topics">​Show all​</a>​,
-  <a href=​"/​topics?scope=starred">​Show all​</a>​,
-  <a href=​"/​topics?scope=public">​Show all​</a>​
-]
-```
+## License
 
-Longest selector:
+Unlicense
 
-```
-div#main > div > div > div > div > div > div.span4.sidebar > div.block.clearfix > div.block-content > ul > li:nth-child(1) > a
-```
+## Bug Reports & Feature Requests
 
-### @desmondw [snowflake](https://github.com/desmondw/snowflake)
-
-This is a Chrome extension, not a stand-alone library.
-
-* average speed
-* uses combination of tag and class or `nth-child`
-
-Longest selector:
-
-```
-div.span12 > div:nth-of-type(1) > div:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(10) > div:nth-of-type(1) > div:nth-of-type(2) > span:nth-of-type(1)
-```
-
-### @fczbkk [css-selector-generator](https://github.com/fczbkk/css-selector-generator)
-
-* supports Bower and NPM
-* no dependencies
-* has tests
-* has documentation
-* Unlicense license
-* tries to use optimized ID, class, tag child selectors or their combination, uses `nth-child` as fallback
-
-Longest selector:
-
-```
-.span12 > :nth-child(1) > .span8 > ul > :nth-child(1) > :nth-child(1)
-```
-
-### @jhartikainen [dompath](https://github.com/jhartikainen/dompath)
-
-* no support for Bower or NPM
-* no dependencies
-* has tests
-* has documentation
-* no license
-* very fast
-* uses ID or tagg + `nth-child` child selector, so the selectors tend to become quite long
-
-Longest selector:
-
-```
-#main > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > ul:nth-child(2) > li:nth-child(10) > div:nth-child(2) > div:nth-child(2) > span:nth-child(4)
-```
-
-### @martinsbalodis [css-selector](https://github.com/martinsbalodis/css-selector)
-
-Sorry, I wasn't able to make it work.
-
-
-### @ngs [jquery-selectorator](https://github.com/ngs/jquery-selectorator)
-
-* supports NPM and Bower
-* depends on Jquery
-* has tests
-* has documentation
-* MIT license
-* **very slow**
-* generates selectors using Jquery's `:eq()` selector, so most of the results are not valid CSS selectors and are only usable within Jquery
-
-Longest selector: n/a
-
-
-### @olivierrr [selector-query](https://github.com/olivierrr/selector-query)
-
-* supports NPM only
-* no dependencies
-* no tests
-* has documentation
-* MIT license
-* quite fast
-* generates the [most complex descendant selector](https://github.com/olivierrr/selector-query/issues/1#issuecomment-133116659) for each element (ID, class, tag, `nth-child`), so it produces the **longest selectors** among tested libraries
-* **WARNING:** uses descendant selectors instead of child selectors, so it sometimes **produces non-unique selectors**
-
-Longest selector:
-
-```
-#main div.container:nth-child(1) div.main-content:nth-child(1) div.row:nth-child(1) div.span12:nth-child(1) div.row:nth-child(1) div.span4.sidebar:nth-child(2) div.block.clearfix:nth-child(2) div.block-header.clearfix:nth-child(1) div.block-action:nth-child(2) a.btn.btn-success.btn-small:nth-child(1) i.icon-plus.icon-white:nth-child(1)
-```
-
-### @rishihahs [domtalk](https://github.com/rishihahs/domtalk)
-
-* supports NPM only
-* no dependencies
-* has tests
-* has documentation
-* MIT license
-* very fast
-* uses ID or `nth-child` descendant selector, selectors are of average length
-* **WARNING:** uses descendant selectors instead of child selectors, so it **produces a lot of non-unique selectors**
-
-Longest selector:
-
-```
-#wrap *:nth-child(1) *:nth-child(1) *:nth-child(1) *:nth-child(3) *:nth-child(1) *:nth-child(1) *:nth-child(1) *:nth-child(3) *:nth-child(11) *:nth-child(1) *:nth-child(1)
-```
-
-### @stevoland [CSSelector.js](https://github.com/stevoland/CSSelector.js)
-
-* supports NPM (claims to support Bower, but I could not find it in the registry)
-* supports AMD
-* no dependencies
-* no tests
-* has documentation
-* MIT license
-* very fast
-* uses ID or tag + `nth-child` child selectors, selectors are quite long
-
-Longest selector:
-
-```
-#main > DIV:nth-child(1) > DIV:nth-child(1) > DIV:nth-child(1) > DIV:nth-child(1) > DIV:nth-child(1) > DIV:nth-child(1) > UL:nth-child(2) > LI:nth-child(10) > DIV:nth-child(2) > DIV:nth-child(2) > SPAN:nth-child(4)
-```
-
-### @thomaspeklak [get-query-selector](https://github.com/thomaspeklak/get-query-selector)
-
-* supports NPM only
-* no dependencies
-* no tests
-* has documentation
-* looks like BSD license
-* very fast
-* uses ID or `nth-child` child selector, selectors are of average length
-
-Longest selector:
-
-```
-#wrap>:nth-child(1)>:nth-child(1)>:nth-child(1)>:nth-child(3)>:nth-child(1)>:nth-child(1)>:nth-child(1)>:nth-child(3)>:nth-child(11)>:nth-child(1)>:nth-child(1)
-```
-
-### @tildeio [selector-generator](https://github.com/tildeio/selector-generator)
-
-* no NPM or Bower
-* requires RequireJS
-* has tests
-* no documentation
-* looks like MIT license
-* very fast
-* uses tag or tag + `nth-child` child selectors
-* **WARNING: produces a lot of non-unique selectors**
-
-Longest selector:
-
-```
-html > body > div > div > div > div > div > div > div > div > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(2) > ul > li:nth-of-type(2) > a
-```
-
-
-## TODO
-
-It would be nice to automate the process, run the tests in PhantomJS, etc. Pull requests are welcome.
-
-## Bug reports, feature requests and contact
-
-If you found any bugs, if you have feature requests or any questions, please, either [file an issue at GitHub](https://github.com/fczbkk/css-selector-generator-benchmark/issues) or send me an e-mail at [riki@fczbkk.com](mailto:riki@fczbkk.com?subject=CSSSelectorGeneratorBenchmark)
+If you found any bugs or have feature requests, please [file an issue at GitHub](https://github.com/fczbkk/css-selector-generator-benchmark/issues).
