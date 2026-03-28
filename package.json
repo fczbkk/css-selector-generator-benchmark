@@ -10,7 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@cypress/unique-selector": "^2.1.1",
+    "@cypress/unique-selector": "^2.2.0",
     "@medv/finder": "^3.1.0",
     "css-selector-generator": "^3.8.0",
     "react": "^19.0.0",
