@@ -1,3 +1,5 @@
+import packageJson from '../../package.json';
+
 type LibraryName = 'css-selector-generator' | '@medv/finder' | '@cypress/unique-selector';
 
 interface LibraryCapability {
@@ -18,6 +20,11 @@ const LIBRARY_URLS: Record<LibraryName, string> = {
   '@cypress/unique-selector': 'https://github.com/cypress-io/unique-selector',
 };
 
+function getLibraryVersion(libraryName: LibraryName): string {
+  const version = packageJson.dependencies[libraryName];
+  return version ? version.replace(/^\^/, '') : 'unknown';
+}
+
 export function CapabilitiesComparison() {
   const capabilities: Capability[] = [
     {
@@ -25,9 +32,9 @@ export function CapabilitiesComparison() {
       description: '',
       hideIndicators: true,
       libraries: {
-        'css-selector-generator': { support: true, note: '3.8.0' },
-        '@medv/finder': { support: true, note: '3.1.0' },
-        '@cypress/unique-selector': { support: true, note: '2.1.1' },
+        'css-selector-generator': { support: true, note: getLibraryVersion('css-selector-generator') },
+        '@medv/finder': { support: true, note: getLibraryVersion('@medv/finder') },
+        '@cypress/unique-selector': { support: true, note: getLibraryVersion('@cypress/unique-selector') },
       },
     },
     {
