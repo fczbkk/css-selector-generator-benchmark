@@ -43,7 +43,7 @@ export function CapabilitiesComparison() {
       hideIndicators: true,
       libraries: {
         'css-selector-generator': { support: true, note: '10+ options: selector types, whitelist/blacklist, root, combining, optimization limits' },
-        '@medv/finder': { support: true, note: 'Filter functions, optimization params, timeout' },
+        '@medv/finder': { support: true, note: 'Filter functions (idName, className, tagName, attr), optimization params (seedMinLength, optimizedMinLength, maxNumberOfPathChecks), timeout control' },
         '@cypress/unique-selector': { support: false, note: 'Only selector types array' },
       },
     },
@@ -70,7 +70,7 @@ export function CapabilitiesComparison() {
       description: 'Options to control and limit selector generation performance',
       libraries: {
         'css-selector-generator': { support: true, note: 'maxCombinations and maxCandidates options limit computation' },
-        '@medv/finder': { support: true, note: 'timeout control, threshold, maxNumberOfTries options' },
+        '@medv/finder': { support: true, note: 'timeoutMs for hard timeout, maxNumberOfPathChecks to limit search iterations, optimizedMinLength to control optimization depth' },
         '@cypress/unique-selector': { support: false },
       },
     },
@@ -88,7 +88,7 @@ export function CapabilitiesComparison() {
       description: 'Custom validation functions to allow/disallow specific selector values',
       libraries: {
         'css-selector-generator': { support: true, note: 'whitelist/blacklist, with support for regex and filter functions' },
-        '@medv/finder': { support: true, note: 'idName, className, tagName, attr filter functions' },
+        '@medv/finder': { support: true, note: 'idName, className, tagName, attr filter functions; className defaults to wordLike() pattern filtering CSS-in-JS generated names' },
         '@cypress/unique-selector': { support: false },
       },
     },
