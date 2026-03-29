@@ -12,7 +12,7 @@
   "dependencies": {
     "@cypress/unique-selector": "^2.2.0",
     "@medv/finder": "^4.0.2",
-    "css-selector-generator": "^3.8.0",
+    "css-selector-generator": "^3.9.1",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
   },
