@@ -7,22 +7,39 @@ interface SelectorComparisonProps {
 
 export function SelectorComparison({ results }: SelectorComparisonProps) {
   const [isExpanded, setIsExpanded] = useState(false);
+  const [showOnlyDiffs, setShowOnlyDiffs] = useState(false);
 
   const libraries = results.libraries;
   const elementCount = libraries[0]?.results.length || 0;
 
   return (
     <div className="selector-comparison">
-      <button
-        className="details-toggle"
-        onClick={() => setIsExpanded(!isExpanded)}
-      >
-        {isExpanded ? '▼' : '▶'} Selector Comparison
-      </button>
+      <div className="selector-comparison-header">
+        <button
+          className="details-toggle"
+          onClick={() => setIsExpanded(!isExpanded)}
+        >
+          {isExpanded ? '▼' : '▶'} Selector Comparison
+        </button>
+        {isExpanded && (
+          <label className="diff-toggle">
+            <input
+              type="checkbox"
+              checked={showOnlyDiffs}
+              onChange={() => setShowOnlyDiffs(!showOnlyDiffs)}
+            />
+            {' '}Show only differences
+          </label>
+        )}
+      </div>
 
       {isExpanded && (
         <div className="comparison-content">
           {Array.from({ length: elementCount }).map((_, index) => {
+            const selectors = libraries.map(lib => lib.results[index]?.selector ?? null);
+            const hasDiff = selectors.some(s => s !== selectors[0]);
+            if (showOnlyDiffs && !hasDiff) return null;
+
             const elementResults = libraries.map(lib => lib.results[index]);
             const element = elementResults[0]?.element;
 

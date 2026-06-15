@@ -224,6 +224,10 @@ body {
   margin-top: 1rem;
 }
 
+.selector-comparison-header .details-toggle {
+  margin-top: 0;
+}
+
 .details-toggle:hover {
   background: #f0f0f0;
 }
@@ -324,6 +328,19 @@ body {
 
 .selector-comparison {
   margin-bottom: 2rem;
+}
+
+.selector-comparison-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.diff-toggle {
+  font-size: 0.9rem;
+  cursor: pointer;
+  user-select: none;
 }
 
 .comparison-content {
