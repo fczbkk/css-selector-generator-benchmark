@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useLayoutEffect, useRef } from 'react';
 import { BenchmarkTable } from './components/BenchmarkTable';
 import { CapabilitiesComparison } from './components/CapabilitiesComparison';
 import { SelectorComparison } from './components/SelectorComparison';
@@ -17,11 +17,24 @@ function App() {
   const [results, setResults] = useState<BenchmarkResults | null>(null);
   const [isRunning, setIsRunning] = useState(false);
   const [progress, setProgress] = useState<BenchmarkProgress | null>(null);
-  const [htmlContent, setHtmlContent] = useState(simpleHtml);
+  const htmlContentRef = useRef(simpleHtml);
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
   const [isHtmlEditorExpanded, setIsHtmlEditorExpanded] = useState(false);
 
+  useLayoutEffect(() => {
+    const el = textareaRef.current;
+    if (!el) return;
+    el.value = htmlContentRef.current;
+    const handleInput = () => { htmlContentRef.current = el.value; };
+    el.addEventListener('input', handleInput);
+    return () => el.removeEventListener('input', handleInput);
+  }, [isHtmlEditorExpanded]);
+
   const handlePresetChange = (preset: HtmlPreset) => {
-    setHtmlContent(HTML_PRESETS[preset]);
+    htmlContentRef.current = HTML_PRESETS[preset];
+    if (textareaRef.current) {
+      textareaRef.current.value = htmlContentRef.current;
+    }
   };
 
   const handleRunBenchmark = async () => {
@@ -31,9 +44,12 @@ function App() {
 
     // Use setTimeout to allow UI to update before heavy computation
     setTimeout(async () => {
-      const benchmarkResults = await runBenchmark(htmlContent, (prog) => {
-        setProgress(prog);
-      });
+      const benchmarkResults = await runBenchmark(
+        textareaRef.current?.value ?? htmlContentRef.current,
+        (prog) => {
+          setProgress(prog);
+        }
+      );
       setResults(benchmarkResults);
       setIsRunning(false);
       setProgress(null);
@@ -81,10 +97,13 @@ function App() {
                 </button>
               </div>
               <textarea
+                ref={textareaRef}
                 className="html-editor"
-                value={htmlContent}
-                onChange={(e) => setHtmlContent(e.target.value)}
                 placeholder="Enter your HTML here..."
+                spellCheck={false}
+                autoComplete="off"
+                autoCorrect="off"
+                autoCapitalize="off"
               />
             </>
           )}
