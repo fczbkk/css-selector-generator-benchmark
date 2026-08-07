@@ -1,8 +1,15 @@
 # CSS Selector Generator Benchmark
 
-Benchmark to compare Javascript libraries for generating CSS selectors.
+> **This project has moved.** It now lives in the
+> [css-selector-generator](https://github.com/fczbkk/css-selector-generator)
+> repository, under `packages/css-selector-generator-benchmark`.
+>
+> **Run it at <https://fczbkk.github.io/css-selector-generator/benchmark/>**
+>
+> This repository is kept only so that existing links keep working.
+> Its history was preserved in the move.
 
-**[Run the benchmark](https://fczbkk.github.io/css-selector-generator-benchmark/)**
+Benchmark to compare Javascript libraries for generating CSS selectors.
 
 ## Overview
 
